@@ -80,10 +80,11 @@ export class WSSecurity implements ISecurity {
 
     let password;
     let nonce;
+    const rawNonce = created + Math.random();
     if (this._hasNonce || this._passwordType !== 'PasswordText') {
       // nonce = base64 ( sha1 ( created + random ) )
       const nHash = crypto.createHash('sha1');
-      nHash.update(created + Math.random());
+      nHash.update(rawNonce);
       nonce = nHash.digest('base64');
     }
     if (this._passwordType === 'PasswordText') {
@@ -94,7 +95,7 @@ export class WSSecurity implements ISecurity {
     } else {
     /* Specific Testcase for passwordDigest calculation cover this code
     /* istanbul ignore next */
-      password = '<wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' + passwordDigest(nonce, created, this._password) + '</wsse:Password>' +
+      password = '<wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' + passwordDigest(rawNonce, created, this._password) + '</wsse:Password>' +
         '<wsse:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">' + nonce + '</wsse:Nonce>';
     }
 
