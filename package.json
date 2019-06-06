@@ -1,5 +1,5 @@
 {
-  "name": "soap",
+  "name": "@eugeniumegherea/soap",
   "version": "0.27.1",
   "description": "A minimal node SOAP client",
   "engines": {
@@ -22,13 +22,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vpulim/node-soap.git"
+    "url": "git+https://github.com/vpulim/node-soap.git"
   },
   "main": "./index.js",
   "types": "./lib/soap.d.ts",
   "directories": {
-    "lib": "./lib",
-    "test": "./test"
+    "lib": "lib",
+    "test": "test"
   },
   "scripts": {
     "prepare": "npm run build",
@@ -36,7 +36,7 @@
     "clean": "rm -rf lib",
     "watch": "tsc -w -p .",
     "lint": "tslint -p tsconfig.json",
-    "toc": "./node_modules/.bin/doctoc Readme.md --github --maxlevel 3",
+    "toc": "doctoc Readme.md --github --maxlevel 3",
     "cover": "nyc --reporter=lcov --reporter=html --reporter=text mocha --timeout 15000 --exit test/*-test.js test/security/*.js",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v",
     "docs": "typedoc --out docs",
@@ -75,5 +75,9 @@
     "tslint": "^5.13.1",
     "typedoc": "^0.14.2",
     "typescript": "^3.3.3333"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/vpulim/node-soap/issues"
+  },
+  "homepage": "https://github.com/vpulim/node-soap#readme"
 }

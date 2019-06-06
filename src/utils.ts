@@ -2,16 +2,14 @@
 import * as crypto from 'crypto';
 
 export function passwordDigest(nonce: string, created: string, password: string): string {
-  // digest = base64 ( sha1 ( nonce + created + password ) )
-  const pwHash = crypto.createHash('sha1');
-
-  const NonceBytes = Buffer.from(nonce || '', 'base64');
-  const CreatedBytes = Buffer.from(created || '', 'utf8');
-  const PasswordBytes = Buffer.from(password || '', 'utf8');
-  const FullBytes = Buffer.concat([NonceBytes, CreatedBytes, PasswordBytes ]);
-
-  pwHash.update(FullBytes);
-  return pwHash.digest('base64');
+  // digest = base64 ( sha1 ( nonce + created + sha1(password) ) )
+  const sha1 = crypto.createHash('sha1');
+  sha1.update(nonce);
+  sha1.update(created);
+  const pwSha1 = crypto.createHash('sha1');
+  pwSha1.update(password);
+  sha1.update(pwSha1.digest());
+  return sha1.digest('base64');
 }
 
 export const TNS_PREFIX = '__tns__'; // Prefix for targetNamespace
