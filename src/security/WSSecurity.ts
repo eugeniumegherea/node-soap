@@ -83,9 +83,11 @@ export class WSSecurity implements ISecurity {
     const rawNonce = created + Math.random();
     if (this._hasNonce || this._passwordType !== 'PasswordText') {
       // nonce = base64 ( sha1 ( created + random ) )
-      const nHash = crypto.createHash('sha1');
-      nHash.update(rawNonce);
-      nonce = nHash.digest('base64');
+      // const nHash = crypto.createHash('sha1');
+      // nHash.update(rawNonce);
+      // nonce = nHash.digest('base64');
+      nonce = Buffer.from(rawNonce).toString('base64');
+
     }
     if (this._passwordType === 'PasswordText') {
       password = '<wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">' + this._password + '</wsse:Password>';
